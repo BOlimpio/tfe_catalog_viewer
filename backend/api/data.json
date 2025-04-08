@@ -1,0 +1,415 @@
+{
+  "workspaces": [
+    {
+      "id": "ws-6jrRyVDv1J8zQMB5",
+      "type": "workspaces",
+      "attributes": {
+        "name": "workspace-1",
+        "description": null,
+        "execution-mode": "agent",
+        "terraform-version": "1.9.4",
+        "resource-count": 10,
+        "created-at": "2025-01-10T10:00:00.000Z",
+        "updated-at": "2025-01-10T10:00:00.000Z",
+        "locked": false,
+        "environment": "default"
+      }
+    },
+    {
+      "id": "ws-9xyZtBkpT43vDMN3",
+      "type": "workspaces",
+      "attributes": {
+        "name": "workspace-2",
+        "description": null,
+        "execution-mode": "remote",
+        "terraform-version": "1.9.4",
+        "resource-count": 15,
+        "created-at": "2025-02-10T10:00:00.000Z",
+        "updated-at": "2025-02-10T10:00:00.000Z",
+        "locked": true,
+        "environment": "default"
+      }
+    }
+  ],
+  "resources": {
+    "ws-6jrRyVDv1J8zQMB5": [ 
+      {
+        "id": "wsr-ws1-01",
+        "type": "resources",
+        "attributes": {
+          "address":"data.terraform_remote_state.azurerm_storage_account.account1",
+          "name":"account1",
+          "created-at": "2025-01-01T10:00:00Z",
+          "updated-at": "2025-01-01T11:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "data.terraform_remote_state",
+          "modified-by-state-version-id": "sv-ws1-01",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-02",
+        "type": "resources",
+        "attributes": {
+          "address":"mod2.azurerm_network_interface.nic1",
+          "name":"nic1",
+          "created-at": "2025-01-02T10:00:00Z",
+          "updated-at": "2025-01-02T11:00:00Z",
+          "module":"mod2",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_network_interface",
+          "modified-by-state-version-id": "sv-ws1-02",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-03",
+        "type": "resources",
+        "attributes": {
+          "address":"mod3.azurerm_virtual_network.vnet1",
+          "name":"vnet1",
+          "created-at": "2025-01-03T10:00:00Z",
+          "updated-at": "2025-01-03T11:00:00Z",
+          "module":"mod3",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_virtual_network",
+          "modified-by-state-version-id": "sv-ws1-03",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-04",
+        "type": "resources",
+        "attributes": {
+          "address":"data.terraform_remote_state.state1",
+          "name":"state1",
+          "created-at": "2025-01-04T10:00:00Z",
+          "updated-at": "2025-01-04T11:00:00Z",
+          "module":"mod4",
+          "provider":"terraform.io/builtin/terraform",
+          "provider-type": "data.terraform_remote_state",
+          "modified-by-state-version-id": "sv-ws1-04",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-05",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_subnet.subnet1",
+          "name":"subnet1",
+          "created-at": "2025-01-05T10:00:00Z",
+          "updated-at": "2025-01-05T11:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "data.azurerm_subnet",
+          "modified-by-state-version-id": "sv-ws1-05",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-06",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_key_vault.kv1",
+          "name":"kv1",
+          "created-at": "2025-01-06T10:00:00Z",
+          "updated-at": "2025-01-06T11:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "data.azurerm_key_vault",
+          "modified-by-state-version-id": "sv-ws1-06",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-07",
+        "type": "resources",
+        "attributes": {
+          "address":"mod7.azurerm_disk.disk1",
+          "name":"disk1",
+          "created-at": "2025-01-07T10:00:00Z",
+          "updated-at": "2025-01-07T11:00:00Z",
+          "module":"mod7",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_disk",
+          "modified-by-state-version-id": "sv-ws1-07",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-08",
+        "type": "resources",
+        "attributes": {
+          "address":"mod8.azurerm_public_ip.pip1",
+          "name":"pip1",
+          "created-at": "2025-01-08T10:00:00Z",
+          "updated-at": "2025-01-08T11:00:00Z",
+          "module":"mod8",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_public_ip",
+          "modified-by-state-version-id": "sv-ws1-08",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-09",
+        "type": "resources",
+        "attributes": {
+          "address":"mod9.azurerm_network_security_group.nsg1",
+          "name":"nsg1",
+          "created-at": "2025-01-09T10:00:00Z",
+          "updated-at": "2025-01-09T11:00:00Z",
+          "module":"mod9",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_network_security_group",
+          "modified-by-state-version-id": "sv-ws1-09",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws1-10",
+        "type": "resources",
+        "attributes": {
+          "address":"mod10.azurerm_virtual_machine.vm1",
+          "name":"vm1",
+          "created-at": "2025-01-10T10:00:00Z",
+          "updated-at": "2025-01-10T11:00:00Z",
+          "module":"mod10",
+          "provider":"hashicorp/azurerm",
+          "provider-type": "azurerm_virtual_machine",
+          "modified-by-state-version-id": "sv-ws1-10",
+          "name-index": null
+        }
+      }
+    ],
+    "ws-9xyZtBkpT43vDMN3": [ 
+      {
+        "id": "wsr-ws2-01",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_linux_virtual_machine.vmA",
+          "name":"vmA",
+          "created-at": "2025-02-01T09:00:00Z",
+          "updated-at": "2025-02-01T10:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/aws",
+          "provider-type": "data.azurerm_linux_virtual_machine",
+          "modified-by-state-version-id": "sv-ws2-01",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-02",
+        "type": "resources",
+        "attributes": {
+          "address":"data.terraform_remote_state.azurerm_resource_group.rgA",
+          "name":"rgA",
+          "created-at": "2025-02-02T09:00:00Z",
+          "updated-at": "2025-02-02T10:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/aws",
+          "provider-type": "data.terraform_remote_state",
+          "modified-by-state-version-id": "sv-ws2-02",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-03",
+        "type": "resources",
+        "attributes": {
+          "address":"modC.azurerm_dns_zone.zoneA",
+          "name":"zoneA",
+          "created-at": "2025-02-03T09:00:00Z",
+          "updated-at": "2025-02-03T10:00:00Z",
+          "module":"modC",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_dns_zone",
+          "modified-by-state-version-id": "sv-ws2-03",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-04",
+        "type": "resources",
+        "attributes": {
+          "address":"modD.azurerm_log_analytics_workspace.lawA",
+          "name":"lawA",
+          "created-at": "2025-02-04T09:00:00Z",
+          "updated-at": "2025-02-04T10:00:00Z",
+          "module":"modD",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_log_analytics_workspace",
+          "modified-by-state-version-id": "sv-ws2-04",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-05",
+        "type": "resources",
+        "attributes": {
+          "address":"modE.azurerm_application_insights.aiA",
+          "name":"aiA",
+          "created-at": "2025-02-05T09:00:00Z",
+          "updated-at": "2025-02-05T10:00:00Z",
+          "module":"modE",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_application_insights",
+          "modified-by-state-version-id": "sv-ws2-05",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-06",
+        "type": "resources",
+        "attributes": {
+          "address":"modF.azurerm_function_app.funcA",
+          "name":"funcA",
+          "created-at": "2025-02-06T09:00:00Z",
+          "updated-at": "2025-02-06T10:00:00Z",
+          "module":"modF",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_function_app",
+          "modified-by-state-version-id": "sv-ws2-06",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-07",
+        "type": "resources",
+        "attributes": {
+          "address":"modG.azurerm_container_registry.acrA",
+          "name":"acrA",
+          "created-at": "2025-02-07T09:00:00Z",
+          "updated-at": "2025-02-07T10:00:00Z",
+          "module":"modG",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_container_registry",
+          "modified-by-state-version-id": "sv-ws2-07",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-08",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_kubernetes_cluster.aksA",
+          "name":"aksA",
+          "created-at": "2025-02-08T09:00:00Z",
+          "updated-at": "2025-02-08T10:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/aws",
+          "provider-type": "data.azurerm_kubernetes_cluster",
+          "modified-by-state-version-id": "sv-ws2-08",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-09",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_private_dns_zone.pdnsA",
+          "name":"pdnsA",
+          "created-at": "2025-02-09T09:00:00Z",
+          "updated-at": "2025-02-09T10:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/aws",
+          "provider-type": "data.azurerm_private_dns_zone",
+          "modified-by-state-version-id": "sv-ws2-09",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-10",
+        "type": "resources",
+        "attributes": {
+          "address":"modJ.azurerm_managed_disk.diskA",
+          "name":"diskA",
+          "created-at": "2025-02-10T09:00:00Z",
+          "updated-at": "2025-02-10T10:00:00Z",
+          "module":"modJ",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_managed_disk",
+          "modified-by-state-version-id": "sv-ws2-10",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-11",
+        "type": "resources",
+        "attributes": {
+          "address":"modK.azurerm_mysql_server.sqlA",
+          "name":"sqlA",
+          "created-at": "2025-02-11T09:00:00Z",
+          "updated-at": "2025-02-11T10:00:00Z",
+          "module":"modK",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_mysql_server",
+          "modified-by-state-version-id": "sv-ws2-11",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-12",
+        "type": "resources",
+        "attributes": {
+          "address":"data.azurerm_monitor_action_group.magA",
+          "name":"magA",
+          "created-at": "2025-02-12T09:00:00Z",
+          "updated-at": "2025-02-12T10:00:00Z",
+          "module":"root",
+          "provider":"hashicorp/aws",
+          "provider-type": "data.azurerm_monitor_action_group",
+          "modified-by-state-version-id": "sv-ws2-12",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-13",
+        "type": "resources",
+        "attributes": {
+          "address":"modM.azurerm_virtual_network_gateway.vngA",
+          "name":"vngA",
+          "created-at": "2025-02-13T09:00:00Z",
+          "updated-at": "2025-02-13T10:00:00Z",
+          "module":"modM",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_virtual_network_gateway",
+          "modified-by-state-version-id": "sv-ws2-13",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-14",
+        "type": "resources",
+        "attributes": {
+          "address":"modN.azurerm_storage_account.saB",
+          "name":"saB",
+          "created-at": "2025-02-14T09:00:00Z",
+          "updated-at": "2025-02-14T10:00:00Z",
+          "module":"modN",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_storage_account",
+          "modified-by-state-version-id": "sv-ws2-14",
+          "name-index": null
+        }
+      },
+      {
+        "id": "wsr-ws2-15",
+        "type": "resources",
+        "attributes": {
+          "address":"modO.azurerm_firewall.fwA",
+          "name":"fwA",
+          "created-at": "2025-02-15T09:00:00Z",
+          "updated-at": "2025-02-15T10:00:00Z",
+          "module":"modO",
+          "provider":"hashicorp/aws",
+          "provider-type": "azurerm_firewall",
+          "modified-by-state-version-id": "sv-ws2-15",
+          "name-index": null
+        }
+      }
+    ]
+  }
+}
