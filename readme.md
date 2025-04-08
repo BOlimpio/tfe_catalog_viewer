@@ -19,6 +19,9 @@ This custom interface was built to solve that.
 
 This is especially useful for platform teams, DevOps engineers, or auditors who need to **interact with resource data beyond what the native portal provides**.
 
+![Interface Preview](frontend/public/images/interface-preview.png)
+
+
 ## 🔧 Technologies
 
 - 🐍 **Backend**: FastAPI + Uvicorn
