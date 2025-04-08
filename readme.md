@@ -5,6 +5,19 @@ This project is a **proof of concept (PoC)** application that consumes data from
 - **Backend**: A mock API built with FastAPI that simulates Terraform Cloud endpoints.
 - **Frontend**: A React application with TailwindCSS that displays workspaces, resources, and dynamic filters.
 
+## 💡 Why Use This Interface?
+
+Terraform Enterprise (TFE) provides a powerful backend for managing infrastructure, but its **web UI is limited** when it comes to filtering and exploring the resources created inside a workspace.
+
+This custom interface was built to solve that.
+
+✅ **Key benefits:**
+- Allows **filtering resources** by type, module, provider, and more  
+- Quickly browse and visualize details of all resources within a workspace  
+- Lightweight and fully compatible with **Terraform Cloud/Enterprise API**  
+- Great for teams that want better insight or validation of deployments  
+
+This is especially useful for platform teams, DevOps engineers, or auditors who need to **interact with resource data beyond what the native portal provides**.
 
 ## 🔧 Technologies
 
@@ -118,20 +131,6 @@ fetch("https://app.terraform.io/api/v2/organizations/{org}/workspaces", {
 - [x] “Clear Filters” button
 - [x] Responsive and intuitive UI
 - [x] FastAPI mock backend for local PoC
-
-## 💡 Why Use This Interface?
-
-Terraform Enterprise (TFE) provides a powerful backend for managing infrastructure, but its **web UI is limited** when it comes to filtering and exploring the resources created inside a workspace.
-
-This custom interface was built to solve that.
-
-✅ **Key benefits:**
-- Allows **filtering resources** by type, module, provider, and more  
-- Quickly browse and visualize details of all resources within a workspace  
-- Lightweight and fully compatible with **Terraform Cloud/Enterprise API**  
-- Great for teams that want better insight or validation of deployments  
-
-This is especially useful for platform teams, DevOps engineers, or auditors who need to **interact with resource data beyond what the native portal provides**.
 
 ## 📝 License
 
