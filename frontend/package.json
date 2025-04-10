@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.1",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

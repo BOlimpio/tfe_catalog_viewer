@@ -1,35 +1,25 @@
-import React from 'react';
 import { Resource } from '../types';
-import { Server, Database, HardDrive } from 'lucide-react';
-
 interface ResourceCardProps {
   resource: Resource;
   onClick: () => void;
 }
 
 const getProviderImage = (provider: string): string => {
-  if (provider.includes('hashicorp/aws')) {
+  if (provider === 'hashicorp/aws') {
     return '/images/aws.png';
   }
-  if (provider.includes('hashicorp/azurerm')) {
+  if (provider.includes('hashicorp/azure') || provider.includes('hashicorp/vault'))  {
     return '/images/azure.png';
   }
-  if (provider.includes('terraform.io/builtin/terraform')) {
+  if (provider === 'terraform.io/builtin/terraform' || provider === 'hashicorp/tfe') {
     return '/images/terraform.png';
   }
   return '/images/generic.png';
 };
 
-const getResourceIcon = (type: string) => {
-  if (type.includes('lambda')) return Server;
-  if (type.includes('database') || type.includes('dynamodb')) return Database;
-  return HardDrive;
-};
-
 export function ResourceCard({ resource, onClick }: ResourceCardProps) {
-  const Icon = getResourceIcon(resource.attributes['provider-type']);
   const providerImage = getProviderImage(resource.attributes.provider);
-  const resourceName = resource.attributes.address.split('.').pop() || '';
+  const resourceName = resource.attributes.name || '';
   const baseProviderType = resource.attributes['provider-type'];
 
   return (

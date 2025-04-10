@@ -6,18 +6,26 @@ frontend/.env
 frontend/.env.*
 
 # === Backend ignores ===
-backend/venv/
-backend/__pycache__/
-backend/*.py[cod]
-backend/.env
-backend/.env.*
+backend/api/venv/
+backend/api/.env
+backend/api/.env.*
+backend/api/__pycache__/
+backend/api/**/*.py[cod]
+backend/api/**/__pycache__/
 
-# === General ===
+# === Python general ignores ===
+__pycache__/
+*.py[cod]
+*.pyo
+
+# === Logs & temp ===
 *.log
 *.pid
+
+# === OS-generated files ===
 .DS_Store
 Thumbs.db
 
-# VSCode (except for shared extensions)
+# === VSCode ===
 .vscode/
 !.vscode/extensions.json

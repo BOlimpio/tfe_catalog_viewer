@@ -1,63 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Workspace, Resource } from './types';
-import { Dropdown } from './components/Dropdown';
 import { MultiSelect } from './components/MultiSelect';
 import { ResourceCard } from './components/ResourceCard';
 import { ResourceModal } from './components/ResourceModal';
 import { Layout } from 'lucide-react';
-import { Dialog, DialogTitle, DialogPanel } from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
+import debounce from 'lodash.debounce';
 
 const FILTER_KEYS = ['name', 'provider-type', 'created-at', 'updated-at', 'module', 'provider'];
-const API_BASE = 'http://localhost:8000/api/v2';
-const AUTH_HEADER = { headers: { Authorization: 'Bearer mock-token' } };
+const API_BASE = 'http://localhost:8000/proxy';
+const AUTH_HEADER = { headers: { Authorization: 'Bearer {TFE_API_TOKEN}' } };
+const TFE_ORGANIZATION = '{TFE_ORGANIZATION}'
+const PAGE_SIZE = 30;
 
 type FilterState = Record<string, string[]>;
 
 function App() {
-  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
-  const [selectedWorkspace, setSelectedWorkspace] = useState('');
+  const [filteredWorkspaces, setFilteredWorkspaces] = useState<Workspace[]>([]);
+  const [workspaceSearch, setWorkspaceSearch] = useState('');
+  const [selectedWorkspace, setSelectedWorkspace] = useState<string>('');
   const [resources, setResources] = useState<Resource[]>([]);
+  const [pagination, setPagination] = useState({ page: 1, totalPages: 1 });
   const [filters, setFilters] = useState<FilterState>({});
   const [selectedModalResource, setSelectedModalResource] = useState<Resource | null>(null);
   const [loading, setLoading] = useState(false);
-  const [showWorkspaceModal, setShowWorkspaceModal] = useState(true);
+
+  const fetchWorkspaceSearch = useCallback(
+    debounce(async (search: string) => {
+      const res = await fetch(`${API_BASE}/organizations/${TFE_ORGANIZATION}/workspaces?page[number]=1&page[size]=100&search[name]=${encodeURIComponent(search)}`, AUTH_HEADER);
+      const json = await res.json();
+      setFilteredWorkspaces(json.data);
+    }, 400),
+    []
+  );
 
   useEffect(() => {
-    const fetchWorkspaces = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`${API_BASE}/organizations/example-org/workspaces`, AUTH_HEADER);
-        const data = await response.json();
-        setWorkspaces(data.data);
-      } catch (error) {
-        console.error('Failed to fetch workspaces:', error);
-      }
-      setLoading(false);
-    };
+    fetchWorkspaceSearch(workspaceSearch);
+  }, [workspaceSearch, fetchWorkspaceSearch]);
 
-    fetchWorkspaces();
-  }, []);
+  const fetchResources = async (workspaceId: string, page = 1) => {
+    if (!workspaceId) return;
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE}/workspaces/${workspaceId}/resources?page[number]=${page}&page[size]=${PAGE_SIZE}`, AUTH_HEADER);
+      const data = await response.json();
+      setResources(data.data);
+      setPagination({
+        page,
+        totalPages: data.meta.pagination['total-pages'] || 1
+      });
+      setFilters({});
+    } catch (error) {
+      console.error('Failed to fetch resources:', error);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchResources = async () => {
-      if (!selectedWorkspace) {
-        setResources([]);
-        return;
-      }
-
-      setLoading(true);
-      try {
-        const response = await fetch(`${API_BASE}/workspaces/${selectedWorkspace}/resources`, AUTH_HEADER);
-        const data = await response.json();
-        setResources(data.data);
-        setFilters({});
-      } catch (error) {
-        console.error('Failed to fetch resources:', error);
-      }
-      setLoading(false);
-    };
-
-    fetchResources();
+    if (selectedWorkspace) {
+      fetchResources(selectedWorkspace, 1);
+    }
   }, [selectedWorkspace]);
 
   const groupedFilterOptions = React.useMemo(() => {
@@ -90,27 +92,50 @@ function App() {
     });
   }, [resources, filters]);
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= pagination.totalPages) {
+      fetchResources(selectedWorkspace, newPage);
+    }
+  };
+
   return (
-    <div className={`min-h-screen ${showWorkspaceModal ? 'opacity-30 pointer-events-none select-none' : 'bg-gray-50'}`}>
+    <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex items-center space-x-2 mb-8">
           <Layout className="h-8 w-8 text-green-600" />
-          <h1 className="text-2xl font-bold text-gray-900">
-            TFE Catalog Viewer
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900">TFE Catalog Viewer</h1>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Dropdown
-            label="Workspace"
-            value={selectedWorkspace}
-            options={workspaces.map(ws => ({ value: ws.id, label: ws.attributes.name }))}
-            onChange={(value) => {
-              setSelectedWorkspace(value);
-              setShowWorkspaceModal(false);
-            }}
-          />
+          <div className="col-span-1 md:col-span-3">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Workspace:</label>
+            <Combobox value={selectedWorkspace} onChange={(value: string) => setSelectedWorkspace(value)}>
+              <div className="relative">
+                <Combobox.Input
+                  className="w-full border rounded px-3 py-2 text-sm"
+                  placeholder="Search workspace..."
+                  onChange={(e) => setWorkspaceSearch(e.target.value)}
+                  displayValue={(val: string) => {
+                    const ws = filteredWorkspaces.find(w => w.id === val);
+                    return ws ? ws.attributes.name : '';
+                  }}
+                />
+                <Combobox.Options className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto text-sm">
+                  {filteredWorkspaces.map(ws => (
+                    <Combobox.Option
+                      key={ws.id}
+                      value={ws.id}
+                      className={({ active }) => `px-4 py-2 cursor-pointer ${active ? 'bg-green-100 text-green-900' : 'text-gray-900'}`}
+                    >
+                      {ws.attributes.name}
+                    </Combobox.Option>
+                  ))}
+                </Combobox.Options>
+              </div>
+            </Combobox>
+          </div>
         </div>
+
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <aside className="bg-white p-4 rounded-md shadow-sm border border-gray-200">
@@ -164,6 +189,35 @@ function App() {
                 ))
               )}
             </div>
+
+            {/* Pagination Controls */}
+            {pagination.totalPages > 1 && (
+              <div className="mt-6 flex justify-center space-x-2">
+                <button
+                  onClick={() => handlePageChange(pagination.page - 1)}
+                  className="px-3 py-1 rounded border text-sm disabled:opacity-50"
+                  disabled={pagination.page === 1}
+                >
+                  Previous
+                </button>
+                {Array.from({ length: pagination.totalPages }, (_, i) => i + 1).map(p => (
+                  <button
+                    key={p}
+                    onClick={() => handlePageChange(p)}
+                    className={`px-3 py-1 rounded border text-sm ${p === pagination.page ? 'bg-green-600 text-white' : ''}`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => handlePageChange(pagination.page + 1)}
+                  className="px-3 py-1 rounded border text-sm disabled:opacity-50"
+                  disabled={pagination.page === pagination.totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -173,23 +227,6 @@ function App() {
             onClose={() => setSelectedModalResource(null)}
           />
         )}
-
-        <Dialog open={showWorkspaceModal && workspaces.length > 0 && !selectedWorkspace} onClose={() => {}} className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen px-4">
-            <DialogPanel className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
-              <DialogTitle className="text-lg font-medium text-gray-900 mb-4">Select a TFE workspace to begin</DialogTitle>
-              <Dropdown
-                label="Workspace"
-                value={selectedWorkspace}
-                options={workspaces.map(ws => ({ value: ws.id, label: ws.attributes.name }))}
-                onChange={(value) => {
-                  setSelectedWorkspace(value);
-                  setShowWorkspaceModal(false);
-                }}
-              />
-            </DialogPanel>
-          </div>
-        </Dialog>
       </div>
     </div>
   );
